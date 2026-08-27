@@ -205,7 +205,7 @@ function renderComp(){
   const baseYTD = COMP.base / 365 * daysWorked;
   const yearEnd = new Date("2026-12-31T00:00:00");
   const daysIn2026 = Math.floor((yearEnd - start) / 86400000) + 1;
-  const base2026 = COMP.base / 365 * daysIn2026;
+  const base2026 = COMP.base;
   const monthsElapsed = months.length;
   const avgComm = monthsElapsed ? commYTD / monthsElapsed : 0;
   const remMonths = 12 - (now.getMonth() + 1);
@@ -218,7 +218,7 @@ function renderComp(){
       card(fmt$(COMP.base), "Base salary", "Guaranteed - started Jul 27, 2026") +
       card(fmt$(commYTD), "Commission earned", "Aug 2026 to date") +
       card(fmt$(baseYTD + commYTD), "Earned so far", daysWorked + " days of base + commission") +
-      card(fmt$(proj2026), "2026 projection", "Base (Jul 27-Dec 31) + commission at current pace") +
+      card(fmt$(proj2026), "2026 projection", "Full $85k base + commission at current pace") +
     "</div>" +
     "<table style='width:100%;max-width:760px;border-collapse:collapse;font-size:13px'><thead><tr>" +
       "<th style='text-align:left;padding:6px 10px' class='faint'>MONTH</th><th class='faint' style='padding:6px'>QUOTA</th><th class='faint' style='padding:6px'>RAN</th><th class='faint' style='padding:6px'>ATTAINMENT</th><th style='text-align:right;padding:6px 10px' class='faint'>COMMISSION</th></tr></thead><tbody>" + rows + "</tbody></table>" +
