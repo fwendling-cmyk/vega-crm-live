@@ -166,7 +166,7 @@ const COMP = {
 };
 function compMonthKey(d){ d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
 function compQuota(m){ if(m < "2026-08") return 0; return (COMP.ramp[m] !== undefined) ? COMP.ramp[m] : COMP.fullQuota; }
-function compRanByMonth(){ const o = {}; (((DATA.meetingsHeld||{}).held)||[]).forEach(function(h){ if(h.held === true && h.date){ const m = String(h.date).slice(0,7); o[m] = (o[m]||0) + 1; } }); return o; }
+function compRanByMonth(){ const o = {}; (((DATA.meetingsHeld||{}).held)||[]).forEach(function(h){ if(h.held === true && !h.demo && h.date){ const m = String(h.date).slice(0,7); o[m] = (o[m]||0) + 1; } }); return o; }
 function compCommission(m, ran){
   const q = compQuota(m); if(!q) return 0;
   const isRamp = COMP.ramp[m] !== undefined;
@@ -216,24 +216,24 @@ function renderComp(){
     "<h2 style='margin:4px 0 12px'>Earnings - Frank Wendling</h2>" +
     "<div style='display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px'>" +
       card(fmt$(COMP.base), "Base salary", "Guaranteed - started Jul 27, 2026") +
-      card(fmt$(commYTD), "Commission earned", "Aug 2026 to date - all meetings held count") +
+      card(fmt$(commYTD), "Commission earned", "Aug 2026 to date") +
       card(fmt$(baseYTD + commYTD), "Earned so far", daysWorked + " days of base + commission") +
       card(fmt$(proj2026), "2026 projection", "Base (Jul 27-Dec 31) + commission at current pace") +
-      card(fmt$(pace), "Annualized pace", "Base + avg monthly commission x 12 (OTE $121,000)") +
     "</div>" +
     "<table style='width:100%;max-width:760px;border-collapse:collapse;font-size:13px'><thead><tr>" +
       "<th style='text-align:left;padding:6px 10px' class='faint'>MONTH</th><th class='faint' style='padding:6px'>QUOTA</th><th class='faint' style='padding:6px'>RAN</th><th class='faint' style='padding:6px'>ATTAINMENT</th><th style='text-align:right;padding:6px 10px' class='faint'>COMMISSION</th></tr></thead><tbody>" + rows + "</tbody></table>" +
-    "<p class='faint' style='font-size:11px;max-width:760px;margin-top:14px'>Plan: $85,000 base + $3,000/mo variable at quota ($36,000/yr target, $500 per meeting at full quota of 6). Ramp: Aug quota 1, Sep quota 3, Oct+ quota 6 - ramp months pay the full $3,000 guaranteed. Accelerator: over-quota meetings pay $500 x attainment multiple (125% attainment = 1.25x, 150% = 1.5x, and so on). All meetings held count, demos included. Adjust me if the bonus plan doc differs.</p>";
+    "<p class='faint' style='font-size:11px;max-width:760px;margin-top:14px'>Plan: $85,000 base + $3,000/mo variable at quota ($36,000/yr target, $500 per meeting at full quota of 6). Ramp: Aug quota 1, Sep quota 3, Oct+ quota 6 - ramp months pay the full $3,000 guaranteed. Accelerator: over-quota meetings pay $500 x attainment multiple (125% attainment = 1.25x, 150% = 1.5x, and so on). Discovery meetings ran count (demos excluded). Adjust me if the bonus plan doc differs.</p>";
 }
 
 const TILES = [
   {key:'meetings', num: compMonBooked(), label:'Meetings booked', hint: compMonLabel() + ' · resets monthly', color:'var(--good)', list: meetings},
-  {key:'held', num: compMonRan(), label:'Meetings ran', hint: compMonLabel() + ' · all meetings held · resets monthly', color:'var(--accent)', list: []},
-  {key:'meetings', num: DATA.meetingsBookedCount ?? meetings.length, label:'All Time Meetings Booked', hint:'Since Jul 27, 2026', color:'var(--good)', list: meetings},
-  {key:'held', num: compAllRan(), label:'All Time Meetings Ran', hint:'All meetings held (demos included)', color:'var(--accent)', list: []},
+  {key:'held', num: compMonRan(), label:'Meetings ran', hint: compMonLabel() + ' · resets monthly', color:'var(--accent)', list: []},
+  
   
   {key:'warm', num: warm.length, label:'Warm accounts', hint:'Connects to follow up / send email', color:'var(--warn)', list: warm},
   {key:'low', num: low.length, label:'Untouched / low coverage', hint:`Fewer than 3 in ${DATA.sequenceName}`, color:'var(--serious)', list: low},
+  {key:'meetings', num: DATA.meetingsBookedCount ?? meetings.length, label:'All Time Meetings Booked', hint:'Since Jul 27, 2026', color:'var(--good)', list: meetings},
+  {key:'held', num: compAllRan(), label:'All Time Meetings Ran', hint:'Since Jul 27, 2026 (demos excluded)', color:'var(--accent)', list: []},
 ];
 
 const NAV = [
