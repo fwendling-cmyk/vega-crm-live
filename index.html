@@ -158,9 +158,80 @@ const esc = s => (s??'').toString().replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&l
 const init = n => n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 const fmtLI = s => { if(!s) return '—'; const m = s.match(/(\d\d):(\d\d) (\d\d)\/(\d\d)\/(\d{4})/); if(!m) return s; return `${m[4]}/${m[3]}/${m[5].slice(2)}`; };
 
+/* ===== COMP / EARNINGS (added by Claude - plan per Offer Vega.pdf + Frank 8/27) ===== */
+const COMP = {
+  base: 85000, startDate: "2026-07-27", target: 3000, fullQuota: 6, rate: 500,
+  ramp: {"2026-08": 1, "2026-09": 3},
+  bookedByMonth: {"2026-08": 8}
+};
+function compMonthKey(d){ d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
+function compQuota(m){ if(m < "2026-08") return 0; return (COMP.ramp[m] !== undefined) ? COMP.ramp[m] : COMP.fullQuota; }
+function compRanByMonth(){ const o = {}; (((DATA.meetingsHeld||{}).held)||[]).forEach(function(h){ if(h.held === true && h.date){ const m = String(h.date).slice(0,7); o[m] = (o[m]||0) + 1; } }); return o; }
+function compCommission(m, ran){
+  const q = compQuota(m); if(!q) return 0;
+  const isRamp = COMP.ramp[m] !== undefined;
+  const att = ran / q;
+  let basePart = Math.min(ran, q) * (COMP.target / q);
+  if(isRamp) basePart = Math.max(COMP.target, basePart);
+  const over = Math.max(0, ran - q);
+  return Math.round(basePart + over * COMP.rate * att);
+}
+function compMonBooked(){ return COMP.bookedByMonth[compMonthKey()] || 0; }
+function compMonRan(){ return compRanByMonth()[compMonthKey()] || 0; }
+function compAllRan(){ const r = compRanByMonth(); return Object.keys(r).reduce(function(s,k){ return s + r[k]; }, 0); }
+function compMonLabel(){ return new Date().toLocaleString("en-US", {month:"long", year:"numeric"}); }
+function fmt$(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+function renderComp(){
+  document.getElementById("tiles").innerHTML = "";
+  const ran = compRanByMonth();
+  const cur = compMonthKey();
+  const months = []; let m = "2026-08";
+  while(m <= cur){ months.push(m); const y = +m.slice(0,4), mo = +m.slice(5,7); m = (mo === 12) ? (y+1)+"-01" : y + "-" + String(mo+1).padStart(2,"0"); }
+  let commYTD = 0;
+  const rows = months.map(function(k){
+    const q = compQuota(k), r = ran[k] || 0, c = compCommission(k, r);
+    commYTD += c;
+    const att = q ? Math.round(r/q*100) : 0;
+    const nm = new Date(k + "-15T12:00:00").toLocaleString("en-US", {month:"long", year:"numeric"});
+    return "<tr><td style='padding:8px 10px;border-bottom:1px solid rgba(128,128,128,.12)'><strong>" + nm + "</strong>" + (COMP.ramp[k] !== undefined ? " <span class='faint' style='font-size:10px'>ramp</span>" : "") + "</td>" +
+      "<td style='padding:8px;text-align:center;border-bottom:1px solid rgba(128,128,128,.12)'>" + q + "</td>" +
+      "<td style='padding:8px;text-align:center;border-bottom:1px solid rgba(128,128,128,.12)'>" + r + "</td>" +
+      "<td style='padding:8px;text-align:center;border-bottom:1px solid rgba(128,128,128,.12)'>" + att + "%</td>" +
+      "<td style='padding:8px 10px;text-align:right;border-bottom:1px solid rgba(128,128,128,.12)'><strong>" + fmt$(c) + "</strong></td></tr>";
+  }).join("");
+  const start = new Date("2026-07-27T00:00:00");
+  const now = new Date();
+  const daysWorked = Math.max(0, Math.floor((now - start) / 86400000));
+  const baseYTD = COMP.base / 365 * daysWorked;
+  const yearEnd = new Date("2026-12-31T00:00:00");
+  const daysIn2026 = Math.floor((yearEnd - start) / 86400000) + 1;
+  const base2026 = COMP.base / 365 * daysIn2026;
+  const monthsElapsed = months.length;
+  const avgComm = monthsElapsed ? commYTD / monthsElapsed : 0;
+  const remMonths = 12 - (now.getMonth() + 1);
+  const proj2026 = base2026 + commYTD + remMonths * avgComm;
+  const pace = COMP.base + avgComm * 12;
+  const card = function(num, label, hint){ return "<div style='flex:1;min-width:200px;padding:14px;border:1px solid rgba(128,128,128,.18);border-radius:12px'><div style='font-size:24px;font-weight:700'>" + num + "</div><div style='font-weight:600;margin-top:2px'>" + label + "</div><div class='faint' style='font-size:11px;margin-top:2px'>" + hint + "</div></div>"; };
+  document.getElementById("content").innerHTML =
+    "<h2 style='margin:4px 0 12px'>Earnings - Frank Wendling</h2>" +
+    "<div style='display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px'>" +
+      card(fmt$(COMP.base), "Base salary", "Guaranteed - started Jul 27, 2026") +
+      card(fmt$(commYTD), "Commission earned", "Aug 2026 to date - all meetings held count") +
+      card(fmt$(baseYTD + commYTD), "Earned so far", daysWorked + " days of base + commission") +
+      card(fmt$(proj2026), "2026 projection", "Base (Jul 27-Dec 31) + commission at current pace") +
+      card(fmt$(pace), "Annualized pace", "Base + avg monthly commission x 12 (OTE $121,000)") +
+    "</div>" +
+    "<table style='width:100%;max-width:760px;border-collapse:collapse;font-size:13px'><thead><tr>" +
+      "<th style='text-align:left;padding:6px 10px' class='faint'>MONTH</th><th class='faint' style='padding:6px'>QUOTA</th><th class='faint' style='padding:6px'>RAN</th><th class='faint' style='padding:6px'>ATTAINMENT</th><th style='text-align:right;padding:6px 10px' class='faint'>COMMISSION</th></tr></thead><tbody>" + rows + "</tbody></table>" +
+    "<p class='faint' style='font-size:11px;max-width:760px;margin-top:14px'>Plan: $85,000 base + $3,000/mo variable at quota ($36,000/yr target, $500 per meeting at full quota of 6). Ramp: Aug quota 1, Sep quota 3, Oct+ quota 6 - ramp months pay the full $3,000 guaranteed. Accelerator: over-quota meetings pay $500 x attainment multiple (125% attainment = 1.25x, 150% = 1.5x, and so on). All meetings held count, demos included. Adjust me if the bonus plan doc differs.</p>";
+}
+
 const TILES = [
-  {key:'meetings', num: DATA.meetingsBookedCount ?? meetings.length, label:'Meetings booked', hint: DATA.month + ' · "(Company) & Vega"', color:'var(--good)', list: meetings},
-  {key:'held', num: (DATA.meetingsHeld?.held||[]).filter(m=>m.held && !m.demo).length, label:'Meetings ran', hint:'Discovery meetings only (demos excluded) · verified via Attio', color:'var(--accent)', list: []},
+  {key:'meetings', num: compMonBooked(), label:'Meetings booked', hint: compMonLabel() + ' · resets monthly', color:'var(--good)', list: meetings},
+  {key:'held', num: compMonRan(), label:'Meetings ran', hint: compMonLabel() + ' · all meetings held · resets monthly', color:'var(--accent)', list: []},
+  {key:'meetings', num: DATA.meetingsBookedCount ?? meetings.length, label:'All Time Meetings Booked', hint:'Since Jul 27, 2026', color:'var(--good)', list: meetings},
+  {key:'held', num: compAllRan(), label:'All Time Meetings Ran', hint:'All meetings held (demos included)', color:'var(--accent)', list: []},
+  
   {key:'warm', num: warm.length, label:'Warm accounts', hint:'Connects to follow up / send email', color:'var(--warn)', list: warm},
   {key:'low', num: low.length, label:'Untouched / low coverage', hint:`Fewer than 3 in ${DATA.sequenceName}`, color:'var(--serious)', list: low},
 ];
@@ -171,6 +242,7 @@ const NAV = [
   {route:'warm', label:'Warm accounts', dot:'var(--warn)', cnt:warm.length},
   {route:'low', label:'Untouched / low', dot:'var(--serious)', cnt:low.length},
 ];
+NAV.push({route:'comp', label:'Earnings', dot:'var(--good)', cnt:''});
 const RNAV = [
   {route:'research-accounts', label:'Account research', cnt:(DATA.accountResearch?.reports||[]).length},
   {route:'research-prospects', label:'Prospect research', cnt:(DATA.prospectResearch?.reports||[]).length},
@@ -626,6 +698,7 @@ function route(){
   else if(h==='research-prospects'){ renderNav(h); renderTiles(null); renderResearchProspects(); window.scrollTo(0,0); }
   else if(h==='calls'){ renderNav(h); renderTiles(null); renderCalls(); window.scrollTo(0,0); }
   else if(h==='held'){ renderNav(h); renderTiles('held'); renderHeld(); window.scrollTo(0,0); }
+  else if(h==='comp'){ renderNav('comp'); renderComp(); window.scrollTo(0,0); }
   else if(h==='tm'){ renderNav('tm'); renderTM(); window.scrollTo(0,0); }
   else { renderNav(''); renderHome(); }
 }
