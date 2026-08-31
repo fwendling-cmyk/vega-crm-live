@@ -246,20 +246,23 @@ function tmNewLines(){
   if (el) el.insertAdjacentHTML("afterbegin", box);
 }
 
+/* split monthly vs all-time tile views */
+const meetingsMonthly = meetings.filter(function(a){ return ((a.meeting && a.meeting.bm) || "2026-08") === compMonthKey(); });
+window.__heldFilter = null;
 const TILES = [
-  {key:'meetings', num: compMonBooked(), label:'Meetings booked', hint: compMonLabel() + ' · resets monthly', color:'var(--good)', list: meetings},
+  {key:'meetings', num: compMonBooked(), label:'Meetings booked', hint: compMonLabel() + ' · resets monthly', color:'var(--good)', list: meetingsMonthly},
   {key:'held', num: compMonRan(), label:'Meetings ran', hint: compMonLabel() + ' · resets monthly', color:'var(--accent)', list: []},
   
   
   {key:'warm', num: warm.length, label:'Warm accounts', hint:'Connects to follow up / send email', color:'var(--warn)', list: warm},
   {key:'low', num: low.length, label:'Untouched / low coverage', hint:`Fewer than 3 in ${DATA.sequenceName}`, color:'var(--serious)', list: low},
-  {key:'meetings', num: DATA.meetingsBookedCount ?? meetings.length, label:'All Time Meetings Booked', hint:'Since Jul 27, 2026', color:'var(--good)', list: meetings},
-  {key:'held', num: compAllRan(), label:'All Time Meetings Ran', hint:'Since Jul 27, 2026 (demos excluded)', color:'var(--accent)', list: []},
+  {key:'meetings-all', num: DATA.meetingsBookedCount ?? meetings.length, label:'All Time Meetings Booked', hint:'Since Jul 27, 2026', color:'var(--good)', list: meetings},
+  {key:'held-all', num: compAllRan(), label:'All Time Meetings Ran', hint:'Since Jul 27, 2026 (demos excluded)', color:'var(--accent)', list: []},
 ];
 
 const NAV = [
   {route:'', label:'All accounts', dot:'var(--accent)', cnt:A.length},
-  {route:'meetings', label:'Meetings booked', dot:'var(--good)', cnt:meetings.length},
+  {route:'meetings-all', label:'Meetings booked', dot:'var(--good)', cnt:meetings.length},
   {route:'warm', label:'Warm accounts', dot:'var(--warn)', cnt:warm.length},
   {route:'low', label:'Untouched / low', dot:'var(--serious)', cnt:low.length},
 ];
@@ -348,7 +351,7 @@ function renderList(key){
   const t = TILES.find(t=>t.key===key);
   let cards = t.list.map(a=>{
     let extra='';
-    if(key==='meetings' && a.meeting){
+    if((key==='meetings'||key==='meetings-all') && a.meeting){
       const m=a.meeting;
       extra = `<div class="kv">
         <dt>Prospect</dt><dd><strong>${esc(m.prospect_name)}</strong> — ${esc(m.prospect_position)}</dd>
@@ -583,7 +586,7 @@ function renderCalls(){
 }
 
 function renderHeld(){
-  const hh = ((DATA.meetingsHeld?.held)||[]).slice().sort((a,b)=> ((b.date||'')+(b.time||'')).localeCompare((a.date||'')+(a.time||'')));
+  const hh = ((DATA.meetingsHeld?.held)||[]).filter(function(m){ return !window.__heldFilter || String(m.date||'').slice(0,7) === window.__heldFilter; }).slice().sort((a,b)=> ((b.date||'')+(b.time||'')).localeCompare((a.date||'')+(a.time||'')));
   const cards = hh.map(m=>`
     <div class="acard" style="cursor:default">
       <div class="row1"><div class="avatar">${init(m.company)}</div><span class="name">${esc(m.title)}</span>
@@ -714,11 +717,12 @@ function renderTM(){
 function route(){
   const h = location.hash.replace(/^#\//,'');
   if(h.startsWith('acct/')){ renderNav(null); renderAccount(h.slice(5)); }
-  else if(h==='meetings'||h==='warm'||h==='low'){ renderNav(h); renderList(h); if(h==='warm'){ tmNewLines(); } }
+  else if(h==='meetings'||h==='meetings-all'||h==='warm'||h==='low'){ renderNav(h); renderList(h); if(h==='warm'){ tmNewLines(); } }
   else if(h==='research-accounts'){ renderNav(h); renderTiles(null); renderResearchAccounts(); window.scrollTo(0,0); }
   else if(h==='research-prospects'){ renderNav(h); renderTiles(null); renderResearchProspects(); window.scrollTo(0,0); }
   else if(h==='calls'){ renderNav(h); renderTiles(null); renderCalls(); window.scrollTo(0,0); }
-  else if(h==='held'){ renderNav(h); renderTiles('held'); renderHeld(); window.scrollTo(0,0); }
+  else if(h==='held'){ renderNav(h); renderTiles('held'); window.__heldFilter = compMonthKey(); renderHeld(); window.scrollTo(0,0); }
+  else if(h==='held-all'){ renderNav('held-all'); renderTiles('held-all'); window.__heldFilter = null; renderHeld(); window.scrollTo(0,0); }
   else if(h==='comp'){ if(isOwner()){ renderNav('comp'); renderComp(); } else { renderNav(''); renderHome(); } window.scrollTo(0,0); }
   else if(h==='tm'){ renderNav('tm'); renderTM(); window.scrollTo(0,0); }
   else { renderNav(''); renderHome(); }
