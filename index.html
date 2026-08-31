@@ -225,6 +225,27 @@ function renderComp(){
     "<p class='faint' style='font-size:11px;max-width:760px;margin-top:14px'>Plan: $85,000 base + $3,000/mo variable at quota ($36,000/yr target, $500 per meeting at full quota of 6). Ramp: Aug quota 1, Sep quota 3, Oct+ quota 6 - ramp months pay the full $3,000 guaranteed. Accelerator: over-quota meetings pay $500 x attainment multiple (125% attainment = 1.25x, 150% = 1.5x, and so on). Discovery meetings ran count (demos excluded). Adjust me if the bonus plan doc differs.</p>";
 }
 
+/* ===== OWNER GATE + NEW LINES OF BUSINESS (added by Claude) ===== */
+function isOwner(){ try { const p = new URLSearchParams(location.search); if (p.get("owner") === "vega-fw-2681") { localStorage.setItem("vega_owner", "1"); } } catch(e) {} return localStorage.getItem("vega_owner") === "1"; }
+const NEWLINES = [
+  {c:"Mile Auto + Insurance House", w:"Acquired Insurance House eff. Jul 1 - 55k+ nonstandard auto policyholders, 10 Southeast states, mid-integration", d:"Jul 1, 2026", u:"https://www.businesswire.com/news/home/20260702211898/en/", a:"Anything-with-wheels at scale; claims ops get rebuilt after acquisitions - Vega's exact wedge."},
+  {c:"Aurenity", w:"TWO new excess casualty programs in 60 days: public entities (Vantage paper, Jul) + middle-market excess up to $10M (Fortegra paper, Aug)", d:"Jul-Aug 2026", u:"https://www.businessinsurance.com/Aurenity-launches-excess-casualty-program/", a:"Zero incumbent claims infrastructure on either program. TM P0 - Trainor + Safino mobiles on file."},
+  {c:"ARU", w:"First-ever commercial liability line (standalone E&S, $2M/$4M) after years property-only", d:"Jul 1, 2026", u:"https://natlawreview.com/press-releases/aru-launches-standalone-commercial-liability-product-expanding-specialty-es", a:"They have property claims habits, not liability ones - clean opening. TM P1."},
+  {c:"Rainbow MGA", w:"New Lessor's Risk Only commercial package - CA/TX live, national rollout through 2026", d:"Jun 24, 2026", u:"https://www.einpresswire.com/article/921685956/", a:"High policy count small-commercial property/GL; tech-forward MGA fits the AI-TPA story. TM P0."},
+  {c:"Amwins", w:"Self-storage program (Jul 16) + enhanced logistics program (Jul 28)", d:"Jul 2026", u:"https://www.amwins.com/who-we-are/newsroom/amwins-program-underwriters-launches-self-storage-facilities-insurance-program", a:"MEETING PREP: Jason Baynard (Inland Marine P&C) Oct 9 - the logistics program is his world."},
+  {c:"Rokstone / Aventum", w:"New US E&O division (Aug 4) + new cyber unit (Jul 17)", d:"Jul-Aug 2026", u:"https://www.insurancebusinessmag.com/us/news/construction/rokstone-appoints-james-hebert-to-lead-new-us-errors-and-omissions-division-584903.aspx", a:"Brand-new US professional lines book being built from zero. TM P0 - Ian Anson in cadence."},
+  {c:"Pharmacists Mutual", w:"PM Healthcare Protect - expansion into home health, hospice, senior living professional liability + GL", d:"Jun 24, 2026", u:"https://www.prnewswire.com/news-releases/pharmacists-mutual-insurance-group-expands-coverage-options-for-healthcare-professionals-with-pm-healthcare-protect-302809515.html", a:"Long-tail litigation-heavy classes - the under-8% litigation stat hits hardest here. TM P0 - Leslie Hough mobile."},
+  {c:"Amynta Group", w:"Acquiring Southern States ag insurance ops (agribusiness P&C MGU) - closes Q4 2026", d:"Aug 12, 2026", u:"https://www.prnewswire.com/news-releases/amynta-group-announces-agreement-to-acquire-southern-states-insurance-operations-302849047.html", a:"New agribusiness line; claims admin decision is live during integration."},
+  {c:"CNA", w:"New Touchstone commercial property product - CA filing Aug 26, fast-quote for CRE/hospitality/retail", d:"Aug 26, 2026", u:"https://www.theinsurer.com/ti/news/cna-submits-commercial-property-insurance-filing-in-california-2026-08-26/", a:"High-volume small/mid commercial property rolling out now. Jay Dipasupil in cadence w/ mobile."},
+  {c:"Trivora", w:"Took Carroll Street growth investment in July explicitly to expand into additional product lines", d:"Jul 2026", u:"https://www.carrollstreet.com/news/trivora-july-2026", a:"Call BEFORE the new lines exist and the TPA decision is made. TM P0 - Farhan Shah mobile."}
+];
+function tmNewLines(){
+  const rows = NEWLINES.map(function(n){ return '<div style="padding:10px 0;border-bottom:1px solid rgba(128,128,128,.12)"><strong>' + esc(n.c) + '</strong> <span class="faint" style="font-size:11px">' + esc(n.d) + '</span><div style="font-size:13px;margin-top:2px">' + esc(n.w) + ' <a href="' + n.u + '" target="_blank" style="font-size:11px">source</a></div><div class="faint" style="font-size:12px;margin-top:2px">' + esc(n.a) + '</div></div>'; }).join('');
+  const box = '<div style="margin:0 0 18px;padding:14px 16px;border:1px solid rgba(96,165,250,.35);border-radius:12px"><h3 style="margin:0 0 4px">New lines of business - last 3 months</h3><p class="faint" style="font-size:12px;margin:0 0 6px">Accounts in your book that added lines Jun-Aug 2026 and likely have not locked in a TPA. Workers-comp-led plays excluded. Researched 8/31/26.</p>' + rows + '</div>';
+  const el = document.getElementById("content");
+  if (el) el.insertAdjacentHTML("afterbegin", box);
+}
+
 const TILES = [
   {key:'meetings', num: compMonBooked(), label:'Meetings booked', hint: compMonLabel() + ' · resets monthly', color:'var(--good)', list: meetings},
   {key:'held', num: compMonRan(), label:'Meetings ran', hint: compMonLabel() + ' · resets monthly', color:'var(--accent)', list: []},
@@ -242,7 +263,7 @@ const NAV = [
   {route:'warm', label:'Warm accounts', dot:'var(--warn)', cnt:warm.length},
   {route:'low', label:'Untouched / low', dot:'var(--serious)', cnt:low.length},
 ];
-NAV.push({route:'comp', label:'Earnings', dot:'var(--good)', cnt:''});
+if (isOwner()) NAV.push({route:'comp', label:'Earnings', dot:'var(--good)', cnt:''});
 const RNAV = [
   {route:'research-accounts', label:'Account research', cnt:(DATA.accountResearch?.reports||[]).length},
   {route:'research-prospects', label:'Prospect research', cnt:(DATA.prospectResearch?.reports||[]).length},
@@ -693,12 +714,12 @@ function renderTM(){
 function route(){
   const h = location.hash.replace(/^#\//,'');
   if(h.startsWith('acct/')){ renderNav(null); renderAccount(h.slice(5)); }
-  else if(h==='meetings'||h==='warm'||h==='low'){ renderNav(h); renderList(h); }
+  else if(h==='meetings'||h==='warm'||h==='low'){ renderNav(h); renderList(h); if(h==='warm'){ tmNewLines(); } }
   else if(h==='research-accounts'){ renderNav(h); renderTiles(null); renderResearchAccounts(); window.scrollTo(0,0); }
   else if(h==='research-prospects'){ renderNav(h); renderTiles(null); renderResearchProspects(); window.scrollTo(0,0); }
   else if(h==='calls'){ renderNav(h); renderTiles(null); renderCalls(); window.scrollTo(0,0); }
   else if(h==='held'){ renderNav(h); renderTiles('held'); renderHeld(); window.scrollTo(0,0); }
-  else if(h==='comp'){ renderNav('comp'); renderComp(); window.scrollTo(0,0); }
+  else if(h==='comp'){ if(isOwner()){ renderNav('comp'); renderComp(); } else { renderNav(''); renderHome(); } window.scrollTo(0,0); }
   else if(h==='tm'){ renderNav('tm'); renderTM(); window.scrollTo(0,0); }
   else { renderNav(''); renderHome(); }
 }
