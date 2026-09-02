@@ -652,14 +652,15 @@ function tmComputed(){
   const CONN = ['meeting_booked','connected_positive','connected_neutral','follow_up','not_interested'];
   const connects = [];
   calls.forEach(function(c){ if(CONN.indexOf(c.disposition)===-1) return; let i = tmNameIdx[tmNorm(c.contact)]; if(i===undefined && c.company){ const j = tmMatchCompany(c.company); if(j>-1) i=j; } if(i!==undefined) connects.push({i:i, call:c}); });
-  const met = [];
-  ((DATA.meetingsHeld && DATA.meetingsHeld.held) || []).forEach(function(m){ let i = tmMatchCompany(m.company); if(i===-1 && m.prospect && tmNameIdx[tmNorm(m.prospect)]!==undefined) i = tmNameIdx[tmNorm(m.prospect)]; if(i>-1) met.push({i:i, date:m.date, time:m.time, title:m.title, who:m.prospect, held:m.held}); });
-  (DATA.accounts || []).forEach(function(a){ if(!a.meeting) return; let i = -1; if(a.domain){ i = TMDATA.accounts.findIndex(function(t){ return t.d === String(a.domain).toLowerCase(); }); } if(i===-1) i = tmMatchCompany(a.name); if(i>-1 && !met.some(function(x){ return x.i===i && x.title===(a.meeting.meeting_title||''); })) met.push({i:i, date:a.meeting.meeting_date, time:a.meeting.meeting_time, title:a.meeting.meeting_title, who:a.meeting.prospect_name, held:null});
+  const met = []; const booked = [];
+  ((DATA.meetingsHeld && DATA.meetingsHeld.held) || []).forEach(function(m){ let i = tmMatchCompany(m.company); if(i===-1 && m.prospect && tmNameIdx[tmNorm(m.prospect)]!==undefined) i = tmNameIdx[tmNorm(m.prospect)]; if(i>-1 && m.held===true) met.push({i:i, date:m.date, time:m.time, title:m.title, who:m.prospect, held:m.held}); });
+  (DATA.accounts || []).forEach(function(a){ if(!a.meeting) return; let i = -1; if(a.domain){ i = TMDATA.accounts.findIndex(function(t){ return t.d === String(a.domain).toLowerCase(); }); } if(i===-1) i = tmMatchCompany(a.name); if(i>-1 && !booked.some(function(x){ return x.i===i && x.title===(a.meeting.meeting_title||''); })) booked.push({i:i, acct:a.name, date:a.meeting.meeting_date, time:a.meeting.meeting_time, title:a.meeting.meeting_title, who:a.meeting.prospect_name, why:(a.meeting.why_meeting||a.meeting.account_notes||''), held:null});
   });
   const warm = {};
   (DATA.accounts || []).forEach(function(a){ if(!a.warm) return; let i = -1; if(a.domain){ i = TMDATA.accounts.findIndex(function(t){ return t.d === String(a.domain).toLowerCase(); }); } if(i===-1) i = tmMatchCompany(a.name); if(i>-1) warm[i]=1; });
   connects.forEach(function(x){ if(['connected_positive','follow_up','meeting_booked'].indexOf(x.call.disposition)>-1) warm[x.i]=1; });
-  return {connects:connects, met:met, warm:warm};
+  if (typeof CONNECTS!=='undefined') (CONNECTS.tm||[]).forEach(function(c){ var k = tmMatchCompany(c.c); if(k>-1 && !connects.some(function(x){ return x.call && x.call.contact===c.n; })) connects.push({i:k, call:{contact:c.n, company:c.c, disposition:(c.o==='meeting'?'meeting_booked':(c.o==='email'?'follow_up':'connected_neutral')), date:'2026-09-01', summary:c.note, link:c.link}}); });
+  return {connects:connects, met:met, booked:booked, warm:warm};
 }
 let tmSel = null, tmTab = 'connected';
 function tmGo(i){ tmSel = (tmSel===i ? null : i); renderTM(); }
@@ -772,7 +773,7 @@ function renderWSIA(){
   var el = document.getElementById('content'); if (!el) return;
   var h = '<h2 style="margin:6px 0 2px 0">WSIA \u2014 Prospects & Outreach</h2>';
   h += '<div class="faint" style="margin-bottom:12px">Franks WSIA Cadence \u00b7 conference outreach + happy hour invites</div>';
-  h += connectsHTML('wsia');
+  h += wsiaBookedHTML() + connectsHTML('wsia');
   h += '<div style="font-weight:700;margin:14px 0 8px 0">WSIA accounts touched</div>';
   var seen = {};
   (CONNECTS.wsia||[]).forEach(function(c){
@@ -784,6 +785,48 @@ function renderWSIA(){
 }
 NAV.push({route:'wsia', label:'WSIA', dot:'var(--accent)', cnt:''});
 
+
+/* === Booked panels + met fix (9/2) === */
+CONNECTS.tm.push(
+ {n:"Paul Kopecky", t:"CAO", c:"CrossCover", dur:"9/1 call", o:"meeting", note:"Agreed on the 9/1 call to meet Frank for a drink at Target Markets \u2014 invite accepted for Sun 10/18, 5:00 PM ET. (Call not in Trellus \u2014 likely dialed from cell.)", link:""},
+ {n:"Brandon Williams", t:"Programs BD Director", c:"Hartford Steam Boiler", dur:"9/1 call", o:"meeting", note:"Warm 9/1 phone connect \u2014 accepted the Vega happy-hour invite for Mon 10/19, 8:30 PM ET. (Call not in Trellus \u2014 likely dialed from cell.)", link:""},
+ {n:"Seth Fischer", t:"Specialty Programs Manager", c:"W.H. Greene & Assoc.", dur:"9/1 call", o:"meeting", note:"Positive 9/1 phone connect \u2014 agreed to meet at Target Markets, Tue 10/20, 1:00 PM ET. (Call not in Trellus \u2014 likely dialed from cell.)", link:""},
+ {n:"Matthew Brown", t:"SVP", c:"GenStar", dur:"9/1 call", o:"meeting", note:"Accepted a 10/19 happy-hour meeting during Target Markets, 7:30 PM ET. (Call not in Trellus \u2014 likely dialed from cell.)", link:""}
+);
+const CALL_LINKS = { 'Clavon':'https://app.trellus.ai/transcripts?tab=calls&id=00f5afe3d64cd148e29a998567d109d5b96a9722f718ad5cd2f398', 'Henke':'https://app.trellus.ai/transcripts?tab=calls&id=00f5afe3d64cd148e29a998567d109d5b96a972938f6957ceee79a', 'Creech':'https://app.trellus.ai/transcripts?tab=calls&id=00f5afe3d64cd148e29a998567d109d5b96a8f36b73775bf7edd88', 'Louie':'https://app.trellus.ai/transcripts?tab=calls&id=00f5afe3d64cd148e29a998567d109d5b96a971b421e2f4fabfd1f', 'Gorrell':'https://app.trellus.ai/transcripts?tab=calls&id=00f5afe3d64cd148e29a998567d109d5b96a971b3cae227c13cfeb' };
+function bookedLink(who){ who = who||''; for (var k in CALL_LINKS) { if (who.indexOf(k)>-1) return CALL_LINKS[k]; } return ''; }
+function bookedPanelHTML(title, items){
+  var h = '<div style="float:right;width:min(370px,100%);margin:0 0 14px 18px;border:2px solid var(--good);border-radius:12px;padding:12px 14px;background:rgba(74,222,128,.06)">';
+  h += '<div style="font-weight:700;font-size:15px">\u2705 ' + title + ' <span class="faint">(' + items.length + ')</span></div>';
+  items.forEach(function(b){
+    h += '<div style="padding:9px 0;border-top:1px solid rgba(128,128,128,.25)">';
+    h += '<div><b>' + (b.who||'') + '</b>' + (b.acct ? ' \u2014 ' + b.acct : '') + '</div>';
+    h += '<div class="faint">' + (b.title||'') + ' \u00b7 ' + (b.date||'') + (b.time ? ' \u00b7 ' + b.time : '') + '</div>';
+    if (b.why) h += '<div style="margin:4px 0">' + b.why + '</div>';
+    var L = bookedLink(b.who);
+    if (L) h += '<a href="' + L + '" target="_blank" style="color:var(--accent)">\u25b6 Listen to the call in Trellus</a>';
+    h += '</div>';
+  });
+  h += '</div>';
+  return h;
+}
+function tmBookedBox(){
+  var el = document.getElementById('content'); if (!el) return;
+  var X = tmComputed();
+  var items = (X.booked||[]).filter(function(b){ return (b.date||'') >= '2026-09-01'; })
+    .sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
+  if (items.length) el.insertAdjacentHTML('afterbegin', bookedPanelHTML('Booked \u2014 Target Markets', items));
+}
+function wsiaBookedHTML(){
+  var items = [
+   {who:'David Louie', acct:'David J. Louie, Inc.', title:'Vega HH', date:'2026-10-12', time:'8:00 PM ET', why:'9/1 call (2:15): attending WSIA \u2014 asked for the details by email and accepted the happy-hour invite (calendar confirmed).'},
+   {who:'B. Gorrell', acct:'Ashley Wholesale Brokerage', title:'Vega Happy Hour', date:'2026-10-12', time:'8:00 PM ET', why:'9/1 call (0:18): short connect \u2014 accepted the Vega happy-hour invite (calendar confirmed).'}
+  ];
+  return bookedPanelHTML('Booked \u2014 WSIA', items);
+}
+var __rtm0 = renderTM;
+renderTM = function(){ __rtm0(); tmConnectsBox(); tmBookedBox(); };
+
 function route(){
   const h = location.hash.replace(/^#\//,'');
   if(h.startsWith('acct/')){ renderNav(null); renderAccount(h.slice(5)); }
@@ -794,7 +837,7 @@ function route(){
   else if(h==='held'){ renderNav(h); renderTiles('held'); window.__heldFilter = compMonthKey(); renderHeld(); window.scrollTo(0,0); }
   else if(h==='held-all'){ renderNav('held-all'); renderTiles('held-all'); window.__heldFilter = null; renderHeld(); window.scrollTo(0,0); }
   else if(h==='comp'){ if(isOwner()){ renderNav('comp'); renderComp(); } else { renderNav(''); renderHome(); } window.scrollTo(0,0); }
-  else if(h==='tm'){ renderNav('tm'); renderTM(); tmConnectsBox(); window.scrollTo(0,0); }
+  else if(h==='tm'){ renderNav('tm'); renderTM(); window.scrollTo(0,0); }
   else if(h==='wsia'){ renderNav('wsia'); renderWSIA(); window.scrollTo(0,0); }
   else { renderNav(''); renderHome(); }
 }
