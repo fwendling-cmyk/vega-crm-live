@@ -162,7 +162,7 @@ const fmtLI = s => { if(!s) return '—'; const m = s.match(/(\d\d):(\d\d) (\d\d
 const COMP = {
   base: 85000, startDate: "2026-07-27", target: 3000, fullQuota: 6, rate: 500,
   ramp: {"2026-08": 1, "2026-09": 3},
-  bookedByMonth: {"2026-08": 8, "2026-09": 8}
+  bookedByMonth: {"2026-08": 8, "2026-09": 12}
 };
 function compMonthKey(d){ d = d || new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
 function compQuota(m){ if(m < "2026-08") return 0; return (COMP.ramp[m] !== undefined) ? COMP.ramp[m] : COMP.fullQuota; }
