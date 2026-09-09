@@ -1,0 +1,534 @@
+window.CRM_LIVE={
+ "generatedAt": "2026-09-09T12:15:00-04:00",
+ "month": "September 2026",
+ "owner": "Frank Wendling",
+ "sequenceName": "PROSPECTING DAY FRANKS 22 DAY CADENCE",
+ "prospectsRefreshedAt": "2026-09-09",
+ "scrubbedAt": "2026-09-09 (email-delivery scrub across the 3 live PROSPECTING DAY cadences)",
+ "meetingsBookedCount": 26,
+ "trellusCheckedAt": "2026-09-09",
+ "apolloSequence": {
+  "checkedAt": "2026-09-09T12:15 ET",
+  "id": "6a95d4034f6d48000cfeeba8",
+  "name": "PROSPECTING DAY FRANKS 22 DAY CADENCE",
+  "steps": 11,
+  "active": true,
+  "activeContacts": 336,
+  "siblingCadences": [
+   {
+    "name": "PROSPECTING DAY WSIA",
+    "id": "6a95d3d95fa9fe001cdee1c1",
+    "activeContacts": 289,
+    "openCallTasks": 173,
+    "overdueCallTasks": 156,
+    "spamBlocked": 20,
+    "notSent": 17
+   },
+   {
+    "name": "PROSPECTING DAY TARGET MARKETS",
+    "id": "6a95d317aac5c0001c29f84a",
+    "activeContacts": 111,
+    "openCallTasks": 3,
+    "spamBlocked": 13,
+    "notSent": 11
+   }
+  ],
+  "openCallTasksFrankAllCadences": 568,
+  "spamBlocked": 0,
+  "notSent": 4,
+  "deliveryScrub": {
+   "totalFailures": 65,
+   "spamBlocked": 33,
+   "stageSafeguard": 30,
+   "badAddress": 2,
+   "note": "33 spam blocks clustered 9/1-9/8 = vegaclaims.com sending reputation, not bad addresses. 30 blocked by contact-stage safeguard (DNC/unsubscribed stages) - addresses fine, should be removed from cadences. Jonah Lipin (SPG) email fixed via Clay. argentagroup.com has no valid MX so Matthew Waghorn is unreachable."
+  },
+  "linkedinConnectsSent": 19,
+  "note": "9/4: all 6 of Frank's cadences emptied (~2,207 enrollments removed), then reloaded from the WSIA + Target Markets divided lists and the Attio book. 9/9: 19 LinkedIn connect requests sent off PD WSIA step 3; 46 LinkedIn tasks cleared. The old Franks 22 Day Cadence (6a749c28bc90640018906cb9) is now EMPTY - this dashboard previously tracked it."
+ },
+ "meetings": [
+  {
+   "id": "strasser-berkley",
+   "name": "Berkley (W. R. Berkley)",
+   "domain": "berkleycustom.com",
+   "companyType": "Fronting/Program Carrier",
+   "meeting": {
+    "record_id": "berkley-strasser-20260902",
+    "company": "Berkley",
+    "meeting_title": "Abraham Strasser · Berkley TPA/MGA Admin Ops",
+    "meeting_date": "2026-09-02",
+    "meeting_time": "10:00 AM ET",
+    "prospect_name": "Abraham Strasser",
+    "prospect_position": "VP, TPA/MGA Admin Operations Manager",
+    "account_notes": "On Frank’s calendar 9/2 10:00 AM ET.",
+    "why_meeting": "Booked intro with Berkley’s TPA/MGA admin operations lead.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "pps-hildebrand",
+   "name": "PPS Specialty Underwriters",
+   "domain": "pps-su.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "pps-hildebrand-20260914",
+    "company": "PPS Specialty Underwriters",
+    "meeting_title": "Vega <> PPS Specialty Underwriters",
+    "meeting_date": "2026-09-14",
+    "meeting_time": "1:00 PM ET",
+    "prospect_name": "Bill Hildebrand",
+    "prospect_position": "CEO, Managing Partner",
+    "account_notes": "Google Meet on the calendar; Jessica invited.",
+    "why_meeting": "Renewable energy MGA — intro call booked 9/1.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "centrex-mitchell",
+   "name": "Centrex Underwriters",
+   "domain": "centrexuw.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "centrex-mitchell-20261012",
+    "company": "Centrex Underwriters",
+    "meeting_title": "Vega Happy Hour (WSIA)",
+    "meeting_date": "2026-10-12",
+    "meeting_time": "8:30 PM ET",
+    "prospect_name": "Nicole Mitchell",
+    "prospect_position": "",
+    "account_notes": "RSVP tentative on the invite — confirm closer to WSIA.",
+    "why_meeting": "Accepted (tentative) the WSIA happy-hour invite from the 9/1 outreach.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "ipfs-orozco",
+   "name": "Imperial PFS",
+   "domain": "ipfs.com",
+   "companyType": "Premium Finance",
+   "meeting": {
+    "record_id": "ipfs-orozco-20261019",
+    "company": "Imperial PFS",
+    "meeting_title": "Vega Happy Hour (Target Markets)",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "8:00 PM ET",
+    "prospect_name": "Gilbert Orozco",
+    "prospect_position": "Wholesale Director",
+    "account_notes": "Invite ACCEPTED.",
+    "why_meeting": "Accepted the Target Markets happy-hour invite — confirmed attending.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "2bdb7ca6-73dd-505d-9c0e-6a376c25ce9a",
+   "name": "Amwins",
+   "domain": "amwins.com",
+   "companyType": "MGA,Broker",
+   "meeting": {
+    "record_id": "2bdb7ca6-73dd-505d-9c0e-6a376c25ce9a",
+    "company": "Amwins",
+    "meeting_title": "Vega & AmWINS",
+    "meeting_date": "2026-10-09",
+    "meeting_time": "9:30 AM ET",
+    "prospect_name": "Jason Baynard",
+    "prospect_position": "SVP, Inland Marine P&C (Program Underwriters)",
+    "prospect_email": "",
+    "account_notes": "Booked live on the 8/20 1:56 PM ET call (5:48 connect, connected_positive) after a long, substantive conversation - the best connect of the week. Needs a calendar invite sent to lock the date/time. UPDATE 8/26: calendar invite now exists — Vega & AmWINS, Fri 10/9 9:30 AM ET.",
+    "why_meeting": "Jason Baynard at Amwins Program Underwriters connected for 5:48 on 8/20 and agreed to meet. No calendar invite exists yet in Attio/Google Calendar - send one."
+   }
+  },
+  {
+   "id": "ac9447ee-4a68-4173-a911-fda84479ce77",
+   "name": "Creative Underwriters",
+   "domain": "creativeunderwriters.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "ac9447ee-4a68-4173-a911-fda84479ce77",
+    "company": "Creative Underwriters",
+    "meeting_title": "Creative Underwriters & Vega",
+    "meeting_date": "2026-08-20",
+    "meeting_time": "2:30 PM ET",
+    "prospect_name": "Nolan Gard",
+    "prospect_position": "Vice President of Operations",
+    "prospect_email": "ngard@creativeunderwriters.com",
+    "account_notes": "Creative Underwriters is a commercial transportation MGA in Jonesboro, GA (est. 1991, ~17 employees) writing local/intermediate/long-haul trucking, garage, marine, and commercial auto. Its programs are fronted by AF Group (acquired by Enstar in Feb 2026), which uses Athens Administrators as its TPA; Creative's own TPA situation is unknown. Attio priority-sheet notes list Nolan Gard (VP Ops) and Rhonda Daugherty (VP UW) as the main POCs, and note Tyler is already connected to Gard as a warm-intro path.",
+    "why_meeting": "Months of outreach (Ian's Jan email to Rhonda, Lucas's May sequence to Gard, Austin's Apr-May LinkedIn messages to Shelley Brown) got no replies. Frank Wendling broke through in early August: he attempted a phone call to Nolan on 8/5, followed with a 'missed call - easier on email' note pitching Vega as an AI-forward TPA (15% loss-ratio improvement, litigation under 10%, cycle times cut by more than half), then sent 'A faster approach to claims' to both Nolan and Rhonda on 8/7. Nolan accepted the 'Creative Underwriters & Vega' invite on 8/10. Tyler's existing connection to Gard and the AF Group/Enstar fronting change are added context for interest in reviewing claims handling."
+   }
+  },
+  {
+   "id": "6a72fd5a-7dd9-555c-92cb-09c1badf4fc1",
+   "name": "One80 Intermediaries",
+   "domain": "one80.com",
+   "companyType": "MGA,Broker",
+   "meeting": {
+    "record_id": "6a72fd5a-7dd9-555c-92cb-09c1badf4fc1",
+    "company": "One80 Intermediaries",
+    "meeting_title": "One80 <> Vega Claims Demo",
+    "meeting_date": "2026-08-20",
+    "meeting_time": "11:00 AM ET",
+    "prospect_name": "Preston Lafrance",
+    "prospect_position": "Director of Claims",
+    "prospect_email": "plafrance@one80.com",
+    "account_notes": "8/12 discovery (48 min, Granola transcript on file): strong TPA pain — 60-day cycle times, manual deductible math, bad reserving. SQL. Deal path runs through One80's carriers; Preston is the champion — his sister (CUO) and Diana (VP Transportation UW) are the deciders. 8/13 WARNING: THREE Frank emails bounced as 'blocked' within 30 min — cbergeron@one80intermediaries.com (10:36 ET), mroper@one80.com (10:57), danascavage@one80intermediaries.com (11:08). One80's mail server appears to be blocking vegaclaims.com. Preston (plafrance@one80.com) still deliverable — demo invite 8/18 went through. Stop emailing other One80 contacts until deliverability is fixed; route through Preston.",
+    "why_meeting": "Discovery on 8/12 landed — Vega's reporting/adjuster model resonated; Preston booked the follow-up demo for 8/18 (invite pending accept, he said he'll accept). Next: test email to Preston + carrier-partner mapping."
+   }
+  },
+  {
+   "id": "6164dc4b-b7cd-44de-aca2-d97b8a44141f",
+   "name": "Souders Group",
+   "domain": "soudersgroup.com",
+   "companyType": "MGA,Broker",
+   "meeting": {
+    "record_id": "6164dc4b-b7cd-44de-aca2-d97b8a44141f",
+    "company": "Souders Group",
+    "meeting_title": "Souders Underwriting Group & Vega",
+    "meeting_date": "2026-09-02",
+    "meeting_time": "12:00-12:30 PM ET (11:00 AM CT)",
+    "prospect_name": "Blake Souders",
+    "prospect_position": "Managing Director",
+    "prospect_email": "blake@soudersgroup.com",
+    "account_notes": "Souders Underwriting Group is a 1-10 person independent brokerage in Vestavia Hills, Alabama placing professional liability and traditional E&S as an alternative to the large corporate houses. Blake Souders is the Managing Director and the only mapped contact. Blake told Frank on the call that Souders does not handle claims and holds no binding authority, and that they are mid system changeover — so this is a partnership/referral conversation, not a TPA displacement.",
+    "why_meeting": "Frank’s 8/17 cold call (9m55s, the longest connect of the week). Blake opened with the standard \"we do not touch claims\" objection; Frank pivoted to a broker-partnership angle and held the conversation for ten minutes, and Blake agreed to 20 minutes on Wed Sep 2. Invite sent 8/17 19:53 UTC and accepted by Blake; Jessica Epps is on it. Google Meet: meet.google.com/eas-ofoj-rnd. NOTE: Blake was already enrolled in Franks 22 Day Cadence when Frank dialed him — the dashboard previously showed Souders Group at seqCount 0, which was wrong."
+   }
+  },
+  {
+   "id": "cc89fd8b-2a66-56c3-bcfe-75a4db05d706",
+   "name": "Swamp Fox Insurance Agency",
+   "domain": "swampfoxagency.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "cc89fd8b-2a66-56c3-bcfe-75a4db05d706",
+    "company": "Swamp Fox Insurance Agency",
+    "meeting_title": "Swamp Fox Agency & Vega",
+    "meeting_date": "2026-08-13",
+    "meeting_time": "9:30 AM ET",
+    "prospect_name": "Shauna Harris",
+    "prospect_position": "Director of Claims",
+    "prospect_email": "shauna@swampfoxagency.com",
+    "account_notes": "New contact — Frank connected with Shauna Harris (Director of Claims); she booked AND accepted for Thu 8/13 9:30 AM ET and wants to loop in the COO. Colleagues previously cited incumbent CBCS; forestry/in-office book is the angle. 8/13: meeting HELD but recording failed at 2 min (intros only) — outcome not captured; needs manual notes + recap email to Shauna.",
+    "why_meeting": "Frank's connect with Shauna landed the meeting; she accepted same day and wants her COO involved. Prior thread: Rick Quagliaroli asked for an email 6/21 then went dark."
+   }
+  },
+  {
+   "id": "9ede4a8a-6060-5d01-8324-cad48b7c8f7d",
+   "name": "Volant Programs",
+   "domain": "volantprograms.com",
+   "companyType": "MGA,Broker",
+   "meeting": {
+    "record_id": "9ede4a8a-6060-5d01-8324-cad48b7c8f7d",
+    "company": "Volant Programs",
+    "meeting_title": "Frank/ Shawn Vega",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "11:30 AM ET",
+    "prospect_name": "Shawn Clavon",
+    "prospect_position": "Chief Executive Officer",
+    "prospect_email": "shawnclavon@volantprograms.com",
+    "account_notes": "Booked meeting on calendar 10/19 11:30 AM ET (Jessica on invite). Volant was a warm account from the 7/8 discovery; this is the re-engagement meeting.",
+    "why_meeting": "Open to Vega for future programs / redundancy TPA after 7/8 discovery; agreed to meet at Target Markets week.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "cardinal-comp-1787757467521",
+   "name": "Cardinal Comp",
+   "domain": "",
+   "companyType": "",
+   "meeting": {
+    "record_id": "cardinal-comp-1787757467521",
+    "company": "Cardinal Comp",
+    "meeting_title": "Cardinal Comp & Vega  Target Markets",
+    "meeting_date": "2026-09-15",
+    "meeting_time": "11:00 AM ET",
+    "prospect_name": "Charles Creech",
+    "prospect_position": "President & CEO",
+    "prospect_email": "charles.creech@cardinalworkcomp.com",
+    "account_notes": "Workers-comp-focused MGA, Charlotte NC. Booked off the 8/26 connect + same-day 1:00 PM callback Frank made. Meeting frames the Target Markets angle. | 9/9 correction: dashboard had 2026-09-04; Frank's calendar has this on 9/15 11:00 AM ET.",
+    "why_meeting": "Charles connected 8/26 (1:14), confirmed attending Target Markets, asked for the 1 PM callback — meeting invite for 9/4 10:30 AM ET now on the calendar.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "venture-1787777713073",
+   "name": "Venture Insurance Programs",
+   "domain": "ventureprograms.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "venture-1787777713073",
+    "company": "Venture Insurance Programs",
+    "meeting_title": "Venture & Vega",
+    "meeting_date": "2026-08-27",
+    "meeting_time": "10:00 AM ET",
+    "prospect_name": "Kevin Vicks",
+    "prospect_position": "(title TBD)",
+    "prospect_email": "kvicks@ventureprograms.com",
+    "account_notes": "West Chester PA program administrator (golf/country clubs, fitness, marine, nonprofits; $10M-$50M est. ARR, 51-250 employees). Deal already exists in Attio. Kevin Vicks accepted the invite; Jessica Epps also attending.",
+    "why_meeting": "Booked by Frank 8/25 for Thu 8/27 10:00 AM ET — Kevin Vicks accepted same day."
+   }
+  },
+  {
+   "id": "tm-hartfordsteamboilerinspectiona-0",
+   "name": "Hartford Steam Boiler Inspection and Insurance Company",
+   "domain": "",
+   "companyType": "",
+   "meeting": {
+    "record_id": "tm-hartfordsteamboilerinspectiona-0",
+    "company": "Hartford Steam Boiler Inspection and Insurance Company",
+    "meeting_title": "Brandon/ Frank Vega HH",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "8:30 PM ET",
+    "prospect_name": "Brandon Williams",
+    "prospect_position": "HSB",
+    "prospect_email": "brandon_williams@hsb.com",
+    "account_notes": "Booked from the 9/1 Trellus connect. Claims are in-house at HSB (no TPA need today) but Brandon accepted the 10/19 happy-hour invite.",
+    "why_meeting": "Warm 9/1 phone connect; accepted the Vega happy-hour invite for the 19th.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "tm-crosscover-27",
+   "name": "CrossCover",
+   "domain": "",
+   "companyType": "",
+   "meeting": {
+    "record_id": "tm-crosscover-27",
+    "company": "CrossCover",
+    "meeting_title": "Frank/ Paul Vega Target Markets",
+    "meeting_date": "2026-10-18",
+    "meeting_time": "5:00 PM ET",
+    "prospect_name": "Paul Kopecky",
+    "prospect_position": "Chief Administrative Officer",
+    "prospect_email": "pkopecky@crosscover.com",
+    "account_notes": "Booked on the 9/1 Prospecting Day call (Trellus connect). Drink at Target Markets, Westin Kierland ~2 PM local / 5 PM ET Sun 10/18. Calendar invite confirmed.",
+    "why_meeting": "Paul agreed on the 9/1 call to meet Frank for a drink at Target Markets; invite accepted.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "tm-coverre-62",
+   "name": "Cover Re",
+   "domain": "",
+   "companyType": "",
+   "meeting": {
+    "record_id": "coverre-hh-20261019",
+    "company": "Cover Re",
+    "meeting_title": "CoverRe & Vega HH",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "5:00 PM ET",
+    "prospect_name": "Jonathan Lim (+ Blanca, Tim)",
+    "prospect_position": "Head of Underwriting (Cover Re)",
+    "prospect_email": "jon@coverre.com",
+    "account_notes": "Target Markets P1 account. Booked 8/27 from an inbound call to Frank's cell - set during the Vega happy hour window at TMPAA (Oct 19, 5:00-5:30 PM ET). CONFIRMED ATTENDING per Frank 8/27: Jonathan Lim, Blanca, and Tim (Cover Re) will be at Target Markets and are coming to the happy hour meeting.",
+    "why_meeting": "They called Frank's cell on 8/27 and agreed to meet at the Target Markets happy hour on the 19th - attendance confirmed, all three coming."
+   }
+  },
+  {
+   "id": "tm-whgreeneassocinc-63",
+   "name": "W.H. Greene & Assoc., Inc.",
+   "domain": "",
+   "companyType": "",
+   "meeting": {
+    "record_id": "tm-whgreeneassocinc-63",
+    "company": "W.H. Greene & Assoc., Inc.",
+    "meeting_title": "Frank/ Seth Target Markets",
+    "meeting_date": "2026-10-20",
+    "meeting_time": "1:00 PM ET",
+    "prospect_name": "Seth Fischer",
+    "prospect_position": "W.H. Greene & Associates",
+    "prospect_email": "sfischer@whgreene.com",
+    "account_notes": "Booked via assistant Nevada (716-819-0479) after the 9/1 connect. N. Pohlman (npohlman@whgreene.com) also on the invite. Jessica on invite.",
+    "why_meeting": "Positive 9/1 phone connect; agreed to meet at Target Markets.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "ashleyga-ashley-general-agency",
+   "name": "Ashley General Agency",
+   "domain": "ashleyga.com",
+   "companyType": "Wholesale Broker",
+   "meeting": {
+    "meeting_title": "Vega Happy Hour",
+    "meeting_date": "2026-10-12",
+    "meeting_time": "8:00 PM ET",
+    "prospect_name": "B. Gorrell",
+    "prospect_position": "Ashley General Agency",
+    "prospect_email": "bgorrell@ashleyga.com",
+    "account_notes": "Vega Happy Hour invite accepted for Mon 10/12 8:00 PM.",
+    "why_meeting": "Accepted Vega happy-hour invite (calendar confirmed).",
+    "record_id": "ashleyga-ashley-general-agency",
+    "company": "Ashley General Agency",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "davidjlouie-david-j.-louie,-inc.",
+   "name": "David J. Louie, Inc.",
+   "domain": "davidjlouie.com",
+   "companyType": "Wholesale Broker / MGA",
+   "meeting": {
+    "meeting_title": "Vega HH",
+    "meeting_date": "2026-10-12",
+    "meeting_time": "8:00 PM ET",
+    "prospect_name": "David Louie",
+    "prospect_position": "President",
+    "prospect_email": "david@davidjlouie.com",
+    "account_notes": "From the 9/1 WSIA-cadence connect: David asked for details + invite by email; calendar invite accepted for 10/12 8 PM.",
+    "why_meeting": "Warm 9/1 phone connect; attending WSIA and accepted the invite.",
+    "record_id": "davidjlouie-david-j.-louie,-inc.",
+    "company": "David J. Louie, Inc.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "generalstar-general-star-(genstar)",
+   "name": "General Star (GenStar)",
+   "domain": "generalstar.com",
+   "companyType": "Carrier (Berkshire Hathaway)",
+   "meeting": {
+    "meeting_title": "Frank/ Matt Vega HH",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "7:30 PM ET",
+    "prospect_name": "Matthew Brown",
+    "prospect_position": "SVP, Delegated Division, General Star Management Co.",
+    "prospect_email": "matthew.brown@generalstar.com",
+    "account_notes": "Booked for Target Markets week; Jessica on invite.",
+    "why_meeting": "Accepted 10/19 happy-hour meeting during Target Markets.",
+    "record_id": "generalstar-general-star-(genstar)",
+    "company": "General Star (GenStar)",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "mahoneygroup-mahoney-group",
+   "name": "Mahoney Group",
+   "domain": "mahoneygroup.com",
+   "companyType": "Retail Broker / Programs",
+   "meeting": {
+    "meeting_title": "Vega Happy Hour",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "8:00 PM ET",
+    "prospect_name": "J. Henke",
+    "prospect_position": "Mahoney Group",
+    "prospect_email": "jhenke@mahoneygroup.com",
+    "account_notes": "Vega Happy Hour invite accepted for Mon 10/19 8:00 PM; Jessica on invite.",
+    "why_meeting": "Accepted Vega happy-hour invite (calendar confirmed).",
+    "record_id": "mahoneygroup-mahoney-group",
+    "company": "Mahoney Group",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "acrisure-yuhas",
+   "name": "Acrisure Re",
+   "domain": "acrisurere.com",
+   "companyType": "Reinsurance Broker",
+   "meeting": {
+    "record_id": "acrisure-yuhas-20260914",
+    "company": "Acrisure Re",
+    "meeting_title": "Olivia Yuhas · Acrisure Re",
+    "meeting_date": "2026-09-14",
+    "meeting_time": "10:00 AM ET",
+    "prospect_name": "Olivia Yuhas",
+    "prospect_position": "",
+    "prospect_email": "oyuhas@acrisurere.com",
+    "account_notes": "On Frank's calendar 9/14 10:00 AM ET.",
+    "why_meeting": "Booked intro with Acrisure Re.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "kpbrokers-prior",
+   "name": "KP Brokers",
+   "domain": "kpbrokers.com",
+   "companyType": "Broker",
+   "meeting": {
+    "record_id": "kpbrokers-prior-20260917",
+    "company": "KP Brokers",
+    "meeting_title": "Oliver Prior · Target Markets chat",
+    "meeting_date": "2026-09-17",
+    "meeting_time": "4:00 PM ET",
+    "prospect_name": "Oliver Prior",
+    "prospect_position": "",
+    "prospect_email": "oliver.prior@kpbrokers.com",
+    "account_notes": "9/17 4:00 PM ET prep call, then also invited to the TMPAA happy hour Mon 10/19 alongside James Kearsey. Apollo has this contact under TAP Underwriting with oliver.prior@tapunderwriting.com as primary - KP Brokers and TAP may be the same shop. George Gager (TAP) declined the 10/19 invite.",
+    "why_meeting": "Pre-TMPAA conversation, then in person at the State Room.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "sumuw-papper",
+   "name": "Sum Underwriters",
+   "domain": "sumuwr.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "sumuw-papper-20261019",
+    "company": "Sum Underwriters",
+    "meeting_title": "Darryl Papper · TMPAA happy hour",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "5:00 PM MST",
+    "prospect_name": "Darryl Papper",
+    "prospect_position": "",
+    "prospect_email": "darryl@sumuwr.com",
+    "account_notes": "TMPAA happy hour invite, no response yet. Apollo shows a job-change event to Specialty Underwriting Managers Ltd.",
+    "why_meeting": "Vega happy hour, The State Room.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "firearmsins-chalk",
+   "name": "Firearms Insurance",
+   "domain": "firearmsins.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "firearmsins-chalk-20261019",
+    "company": "Firearms Insurance",
+    "meeting_title": "Angie Chalk · TMPAA happy hour",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "5:00 PM MST",
+    "prospect_name": "Angie Chalk",
+    "prospect_position": "",
+    "prospect_email": "angie@firearmsins.com",
+    "account_notes": "TMPAA happy hour invite, no response yet. Contact stage is Interested - a prior cadence enrollment was blocked by the stage safeguard. Do not cold-enroll.",
+    "why_meeting": "Vega happy hour, The State Room.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "aon-anderson",
+   "name": "Aon",
+   "domain": "aon.com",
+   "companyType": "Broker/Reinsurance Intermediary",
+   "meeting": {
+    "record_id": "aon-anderson-20261019",
+    "company": "Aon",
+    "meeting_title": "Cory Anderson · TMPAA happy hour",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "5:00 PM MST",
+    "prospect_name": "Cory Anderson",
+    "prospect_position": "EVP - MGA Program Growth Leader",
+    "prospect_email": "cory.anderson@aon.com",
+    "account_notes": "TMPAA happy hour invite, no response yet. Aon has an open deal in Attio (Captive Broker/Manager), so excluded from cold cadences.",
+    "why_meeting": "Vega happy hour, The State Room.",
+    "bm": "2026-09"
+   }
+  },
+  {
+   "id": "bishopstreet-latinsky",
+   "name": "Bishop Street Underwriters",
+   "domain": "bishopstreetuw.com",
+   "companyType": "MGA",
+   "meeting": {
+    "record_id": "bishopstreet-latinsky-20261019",
+    "company": "Bishop Street Underwriters",
+    "meeting_title": "Dan Latinsky · TMPAA happy hour",
+    "meeting_date": "2026-10-19",
+    "meeting_time": "5:00 PM MST",
+    "prospect_name": "Dan Latinsky",
+    "prospect_position": "",
+    "prospect_email": "dan.latinsky@bishopstreetuw.com",
+    "account_notes": "TMPAA happy hour invite, no response yet.",
+    "why_meeting": "Vega happy hour, The State Room.",
+    "bm": "2026-09"
+   }
+  }
+ ]
+};
